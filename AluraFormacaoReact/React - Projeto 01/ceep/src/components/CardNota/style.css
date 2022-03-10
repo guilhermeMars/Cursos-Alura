@@ -1,0 +1,35 @@
+/*
+As estilizações de classes em css está ficam públicas para todos os componentes na hora de traspilar para o navegador
+(Dois arquivos com o mesmo nome de classe acabam conflitando entre si, mesmo que estejam importando css diferentes)
+Sendo assim, dois arquivos com o mesmo nome de classe possuem conflitos de nome
+
+Por conta disso é importante colocar o nome do componente no início
+*/
+
+.card-nota{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: rgba(220, 220, 220, 0.356);
+    border-radius: 4px;
+    flex-wrap: wrap;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    padding: 1em;
+}
+.card-nota_cabecalho{
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-nota_texto{
+    margin-top: 8px;
+    font-size: 1em;
+}
+
+.card-nota_titulo{
+    font-size: 1.2em;
+    margin-right: 12px;
+}

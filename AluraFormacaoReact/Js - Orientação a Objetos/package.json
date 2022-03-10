@@ -1,0 +1,12 @@
+{
+  "name": "marsbank",
+  "version": "1.0.0",
+  "description": "Projeto de estudo do marsbank para os clientes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "guilhermeMars",
+  "license": "ISC",
+  "type": "module"
+}
