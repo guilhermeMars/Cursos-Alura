@@ -26,18 +26,18 @@ class App extends Component {
       // React - Ecossistema com diversas funções
       <section className="conteudo">
         <FormularioCadastro 
-        categorias = {this.categorias.categorias}
-        criarNota={this.notas.adicionarNota}
+        categorias = {this.categorias}
+        criarNota={this.notas.adicionarNota.bind(this.notas)}
         />
         {/*Passa uma propriedade para o filho (props)*/}
         <main className="conteudo-principal">
           <ListaDeCategorias 
-          adicionarCategoria = {this.categorias.adicionarCategoria}
-          categorias={this.categorias.categorias}
+          adicionarCategoria = {this.categorias.adicionarCategoria.bind(this.categorias)}
+          categorias={this.categorias} // Dá acesso a todos os métodos
           />
           <ListaDeNotas /*new ListaDeNotas({notas:this.notas})*/
-            apagarNota={this.notas.apagarNota}
-            notas={this.notas.notas}
+            apagarNota={this.notas.deletarNota.bind(this.notas)}
+            notas={this.notas}
           />
         </main>
       </section>
