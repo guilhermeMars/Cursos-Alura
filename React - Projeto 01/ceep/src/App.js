@@ -4,41 +4,18 @@ import FormularioCadastro from "./components/FormularioCadastro";
 import ListaDeCategorias from "./components/ListaDeCategorias";
 import "./assets/App.css";
 import "./assets/index.css";
+import Categorias from "./data/categorias";
+import ArrayDeNotas from "./data/notas";
 
 class App extends Component {
   constructor() {
     super();
-
+    this.categorias = new Categorias();
+    this.notas = new ArrayDeNotas();
     /*
     Stateful components - tem estado interno e guarda informações relevantes e que serão gerenciadas (Ex: App.js)
     Stateless - Não possui estado interno (Ex: CardNota)
     */
-
-    this.state = {
-      notas: [],
-      categorias: [], // As categorias serão utilizadas aqui e não na ListaDeCateorias pois será utilizada e outras partes do programa
-    }; // Propriedade especial, toda vez que é atualizada o react chama o render do componente alterado
-  }
-
-  criarNota(titulo, texto, categoria) {
-    const novaNota = { titulo, texto, categoria };
-    const novoArrayNotas = [...this.state.notas, novaNota];
-    const novoEstado = {
-      notas: novoArrayNotas, // Caso as notas não sejam alteradas, o setState nem faz nada
-    };
-    this.setState(novoEstado); // React gerencia o método de renderização // Atualiza o estado interno do componente para ser compatível
-  }
-
-  adicionarCategoria(valorCategoria){
-    const novoArrayCategorias = [...this.state.categorias, valorCategoria];
-    const novoEstado = {...this.state, categorias:novoArrayCategorias};
-    this.setState(novoEstado);
-  }
-
-  deletarNota(index) {
-    let arrayNotas = this.state.notas;
-    arrayNotas.splice(index, 1);
-    this.setState({ notas: arrayNotas });
   }
 
   render() {
@@ -49,18 +26,18 @@ class App extends Component {
       // React - Ecossistema com diversas funções
       <section className="conteudo">
         <FormularioCadastro 
-        categorias = {this.state.categorias}
-        criarNota={this.criarNota.bind(this)}
+        categorias = {this.categorias.categorias}
+        criarNota={this.notas.adicionarNota}
         />
         {/*Passa uma propriedade para o filho (props)*/}
         <main className="conteudo-principal">
           <ListaDeCategorias 
-          adicionarCategoria = {this.adicionarCategoria.bind(this)}
-          categorias={this.state.categorias}
+          adicionarCategoria = {this.categorias.adicionarCategoria}
+          categorias={this.categorias.categorias}
           />
           <ListaDeNotas /*new ListaDeNotas({notas:this.notas})*/
-            apagarNota={this.deletarNota.bind(this)}
-            notas={this.state.notas}
+            apagarNota={this.notas.apagarNota}
+            notas={this.notas.notas}
           />
         </main>
       </section>
