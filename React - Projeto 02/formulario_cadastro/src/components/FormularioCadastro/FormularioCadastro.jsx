@@ -1,101 +1,55 @@
-import React, { useState } from "react";
-import { Button, Switch, TextField, FormControlLabel } from "@mui/material";
+import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import DadosEntrega from "./DadosEntregas";
+import DadosPessoais from "./DadosPessoais";
+import DadosUsuario from "./DadosUsuario";
 
-function FomularioCadastro({aoEnviar, cpfValidacao}) { // Como tem muitas propriedades, nós especificamos quais vamos utilizar
+function FomularioCadastro({ aoEnviar, validacoes }) {
+  //function formularioAtual(etapa){
+  // Switch e case, além de deixarem o código muito grande, normalmente se espalham pra outras partes, tornando o uso dele parcialmente inviável
 
-  // State=[] - Não pode ser usado, pois é uma função e não possui estado próprio nem ciclo de vida
+  // switch(etapa){
+  //   case 0:
+  //     return <DadosUsuario aoEnviar={proximo}/>
+  //   case 1:
+  //     return <DadosPessoais aoEnviar={proximo} cpfValidacao={cpfValidacao} etapa={etapa}/>
+  //   [...]
+  // }
 
-  // Hooks - useState: Não podem ser chamadads dentro de condições. Só podem ser chamadas em funções do React (com return etc)
-  // useState retorna uma variável que pode referenciar o estado e uma função para modifica-la
+  //}
+  const [etapaAtual, setEtapaAtual] = useState(0);
+  const [dadosColetados, setDados] = useState("");
+  useEffect(()=>{ // Chama quando o componente for montado, atualizado e desmontado
+    if(etapaAtual === formularios.length-1){
+      aoEnviar(dadosColetados);
+    }
+  });
 
-  const [nome, setNome] = useState("");
-  const [sobrenome, setSobrenome] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [promocoes, setPromocoes] = useState(true);
-  const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({cpf:{valido:false, texto:""}});
+  const formularios = [ // Funciona melhor que o switch case (pode ser utilizado um objeto literal)
+    <DadosUsuario aoEnviar={coletarDados} validacoes={validacoes}/>,
+    <DadosPessoais aoEnviar={coletarDados} validacoes={validacoes} />,
+    <DadosEntrega aoEnviar={coletarDados} validacoes={validacoes}/>,
+    <Typography variant="h5">Obrigado pelo cadastro!</Typography>
+  ];
 
-  return (
-    <form
-      // Fomulátio não controlado - feito apenas pelo html. Não possui validações, pois o que aparece na tela não bate com o que é passado para o estado
-      onSubmit={(event) => {
-        event.preventDefault();
-        aoEnviar({nome, sobrenome, cpf, novidades, promocoes})
-      }}
-    >
-      <TextField
-        value={nome}
-        onChange={(event) => {
-          // let tempNome = event.target.value; // Precisa ter essa validação por conta da assincronicidade de dos setter's, que impedem de apagar o que foi escrito
-          // if(tempNome.length >=3){
-          //   tempNome = tempNome.substring(0, 3);
-          // }
-          // setNome(tempNome);
-          setNome(event.target.value);
-        }}
-        id="lbl_nome"
-        label="Nome"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-      />
-      <TextField
-        value={sobrenome}
-        onChange={(event) => {
-          setSobrenome(event.target.value);
-        }}
-        id="lbl_sobrenome"
-        label="Sobrenome"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-      />
-      <TextField
-        value={cpf}
-        onChange={(event) => {
-          setCpf(event.target.value);
-        }}
-        onBlur={(event)=>{
-          const eValido = cpfValidacao(cpf);
-          setErros({cpf:eValido})
-        }}
-        error={erros.cpf.valido}
-        helperText={erros.cpf.texto}
-        id="lbl_cpf"
-        label="Cpf"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-      />
+  function coletarDados(dados){
+    setDados({...dadosColetados, ...dados}); // useState é assíncrono, sendo assim, ele agenda essa ação para o futuro e não executa na hora que o form é enviado (componentDidMount, componentDidUpdate e componentDidUnmout)
+    proximo();
+  }
 
-      <FormControlLabel
-        control={
-          <Switch
-            checked={novidades}
-            onChange={(event) => {
-              setNovidades(event.target.checked);
-            }}
-          />
-        }
-        label="Novidades"
-      />
-      <FormControlLabel
-        control={
-          <Switch
-            checked={promocoes} // Controlado pois o valor só é atriuído a partir de um componente pai
-            onChange={(event) => {
-              setPromocoes(event.target.checked);
-            }}
-          />
-        }
-        label="Promoções"
-      />
+  function proximo() {
+    setEtapaAtual(etapaAtual + 1);
+  }
 
-      <Button type="submit" variant="contained" color="primary">
-        Cadastrar
-      </Button>
-    </form>
-  );
+  return <>
+  <Stepper activeStep={etapaAtual}>
+    <Step><StepLabel>Login</StepLabel></Step>
+    <Step><StepLabel>Pessoal</StepLabel></Step>
+    <Step><StepLabel>Entrega</StepLabel></Step>
+    <Step><StepLabel>Finalização</StepLabel></Step>
+  </Stepper>
+  {formularios[etapaAtual]}
+  </>;
 }
 
 export default FomularioCadastro;
