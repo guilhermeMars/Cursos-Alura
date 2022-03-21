@@ -1,0 +1,23 @@
+.doguito-imagem {
+  width: 100%;
+  max-width: 25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.naoencontrado-texto {
+  font-size: var(--fonte-tamanho-naoencontrado-texto);
+  margin-bottom: 1rem;
+}
+
+.naoencontrado-link {
+  color: var(--cor-primaria);
+}
+
+.link--home{
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+  background-color: rgb(86, 110, 248);
+  border-radius: 3px;
+}

@@ -2,8 +2,9 @@ import React from "react";
 import "./App.css";
 import FormularioCadastro from "./components/FormularioCadastro/FormularioCadastro.jsx";
 import { Container, Typography } from "@mui/material";
-import '@fontsource/roboto/300.css';
-import {validarCpf, validarNome, validarSenha} from "./models/Cadastro.js"
+import "@fontsource/roboto/300.css";
+import { validarCpf, validarNome, validarSenha } from "./models/Cadastro.js";
+import ValidacoesCadastro from "./contexts/ValidacoesCadastro";
 
 function App() {
   return (
@@ -11,12 +12,16 @@ function App() {
       <Typography variant="h2" component="h1" align="center">
         Formulario de Cadastro
       </Typography>
-      <FormularioCadastro aoEnviar={aoEnviarForm} validacoes={{cpf:validarCpf, senha:validarSenha, nome:validarNome}} />
+      <ValidacoesCadastro.Provider // Fala quais as informações que os elementos dentro do contexto vão conhecer
+        value={{ cpf: validarCpf, senha: validarSenha, nome: validarNome }}
+      >
+        <FormularioCadastro aoEnviar={aoEnviarForm} />
+      </ValidacoesCadastro.Provider>
     </Container>
   );
 }
 
-function aoEnviarForm(dados){
+function aoEnviarForm(dados) {
   console.log(dados);
 }
 

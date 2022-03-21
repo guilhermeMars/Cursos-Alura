@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Switch, TextField, FormControlLabel } from "@mui/material";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro.js";
+import useErros from "../../hooks/useErros.js";
 
-function DadosPessoais({aoEnviar, validacoes}) { // Como tem muitas propriedades, nós especificamos quais vamos utilizar
+function DadosPessoais({ aoEnviar }) {
+  // Como tem muitas propriedades, nós especificamos quais vamos utilizar
 
   // State=[] - Não pode ser usado, pois é uma função e não possui estado próprio nem ciclo de vida
 
@@ -13,33 +16,16 @@ function DadosPessoais({aoEnviar, validacoes}) { // Como tem muitas propriedades
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({cpf:{valido:false, texto:""}, nome:{valido:false, texto:""}});
+  const validacoes = useContext(ValidacoesCadastro);
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes)
 
-  function validarCampos(event){
-      const {name, value} = event.target; // Desestruturação
-      const eValido = validacoes[name](value); // pegando o objeto de validações, o atributo do campo e o valor
-      // const novoEstado = {...erros, name: eValido}
-      const novoEstado = {...erros}
-      novoEstado[name] = eValido; // Dessa forma é possivel associar a variável name
-      setErros(novoEstado);
-  }
-
-  function possoEnviar(){
-    for(let campo in erros){
-      if(erros[campo].valido){
-        return false
-      }
-    }
-    return true
-  }
-  
   return (
     <form
       // Fomulátio não controlado - feito apenas pelo html. Não possui validações, pois o que aparece na tela não bate com o que é passado para o estado
       onSubmit={(event) => {
         event.preventDefault();
-        if(possoEnviar()){
-          aoEnviar({nome, sobrenome, cpf, novidades, promocoes});
+        if (possoEnviar()) {
+          aoEnviar({ nome, sobrenome, cpf, novidades, promocoes });
         }
       }}
     >
