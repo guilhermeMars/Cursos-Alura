@@ -1,0 +1,15 @@
+>Pirâmide de testes<
+
+Testes Unitários (base) - Testa as menores partes do projeto (Funções, Snapshots, Componentes)
+Integração (meio) - Testa como as menores unidades se comportam em conjunto (Testando conexão com o backend)
+E2E (topo) - Testa um fluxo inteiro, simula no navegador e traz muito valor, porém com uma maior dificildade
+
+>Quando vale a pena fazer testes<
+
+Testar se bibliotecas vão funcionar bem com o projeto
+Modificações em partes críticas do projeto
+
+>Quando NÃO vale a pena fazer testes<
+
+Páginas para campanha de marketing
+Modificações pequenas e pouco funcionais
