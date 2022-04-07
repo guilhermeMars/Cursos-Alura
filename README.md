@@ -1,10 +1,7 @@
-# Cursos-Alura
-Pasta com todos os cursos feitos na plataforma da Alura
-Possuo anotações nos arquivos principais, fiquem à vontade para ler :)
+# Formação React
 
-Na parte que começo a usar o react efetivamente, caso queira ver o projeto, apenas dê um `npm start` no terminal, com o node instalado.
+Pasta com os 9 cursos feitos durante a Formação React na Alura
 
-Cursos Feitos até o momento:
-JavaScript: programando a Orientação a Objetos
-JavaScript: interfaces e Herança em Orientação a Objetos
-React: entendendo como a biblioteca funciona
+Minhas anotações estão na maioria dos arquivos .jsx na forma de comentário :)
+
+Meu certificado de conclusão: https://cursos.alura.com.br/degree/certificate/4ff0f6bd-ee0b-49f0-be8c-07e867fe1813
